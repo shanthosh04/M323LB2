@@ -4,7 +4,7 @@ import createElement from "virtual-dom/create-element";
 
 const { div, button, p, h1, input, br } = hh(h);
 
-const btnStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
+const btnStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded";
 
 const MESSAGES = {
   QUESTION_CHANGE: "QUESTION_CHANGE",
