@@ -89,7 +89,7 @@ function createView(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, rating: 0 }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
               "Schlecht"
             ),
@@ -97,7 +97,7 @@ function createView(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, rating: 1 }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
               "Gut"
             ),
@@ -105,7 +105,7 @@ function createView(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, rating: 2 }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
               "Sehr Gut"
             ),
