@@ -1,83 +1,129 @@
+// Importieren der benötigten Module
 import hh from "hyperscript-helpers";
 import { h, diff, patch } from "virtual-dom";
 import createElement from "virtual-dom/create-element";
 
+// Destructuring von Hyperscript-Helpers
 const { div, button, p, h1, input, br } = hh(h);
 
+// Stildefinition für Schaltflächen
 const btnStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded";
 
+// Nachrichtentypen für die Anwendung
 const MESSAGES = {
-  QUESTION_CHANGE: "QUESTION_CHANGE",
-  ANSWER_CHANGE: "ANSWER_CHANGE",
-  ADD_CARD: "ADD_CARD",
-  TOGGLE_ANSWER: "TOGGLE_ANSWER",
-  DELETE_CARD: "DELETE_CARD",
-  EDIT_CARD: "EDIT_CARD",
-  RATE_CARD: "RATE_CARD",
+  QUESTION_QUIZ: "QUESTION_QUIZ",
+  ANSWER_QUIZ: "ANSWER_QUIZ",
+  ADD_QUIZ: "ADD_QUIZ",
+  SHOW_HIDE_ANSWER: "SHOW_HIDE_ANSWER",
+  DELETE_QUIZ: "DELETE_QUIZ",
+  EDIT_QUIZ: "EDIT_QUIZ",
+  FEEDBACK_QUIZ: "FEEDBACK_QUIZ",
 };
 
+// Funktion zur Erstellung der Benutzeroberfläche (View)
 function createView(dispatch, model) {
   return div({}, [
-    div([
+    // Eingabefelder für Frage und Antwort
+    div({}, [
       input({
         type: "text",
         placeholder: "Frage eingeben",
         value: model.question,
         oninput: (event) =>
-          dispatch({ type: MESSAGES.QUESTION_CHANGE, value: event.target.value }),
-        className: "border border-gray-300 rounded p-1 mr-2", 
+          dispatch({ type: MESSAGES.QUESTION_QUIZ, value: event.target.value }),
+        className: "border border-gray-300 rounded p-1 mr-2",
       }),
       input({
         type: "text",
         placeholder: "Antwort eingeben",
         value: model.answer,
         oninput: (event) =>
-          dispatch({ type: MESSAGES.ANSWER_CHANGE, value: event.target.value }),
+          dispatch({ type: MESSAGES.ANSWER_QUIZ, value: event.target.value }),
         className: "border border-gray-300 rounded p-1 mr-2",
       }),
-      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }), className: btnStyle }, "Speichern"),
+      button(
+        {
+          onclick: () => dispatch({ type: MESSAGES.ADD_QUIZ }),
+          className: btnStyle,
+        },
+        "Speichern"
+      ),
     ]),
+
+    // Karten für Fragen und Antworten
     ...model.cards.map((card, index) =>
       div(
-        {
-          key: index,
-          className: "bg-teal-700 w-60 break-words relative m-10 p-10",
-        },
+        { className: "bg-teal-700 w-60 break-words relative m-10 p-10" },
         [
-          p({ className: " absolute top-5 right-5"},
+          p(
+            { className: " absolute top-5 right-5" },
             [
-              button({ onclick: () => dispatch({ type: MESSAGES.EDIT_CARD, index }) }, "Bearbeiten"),
-              
-              button({ onclick: () => dispatch({ type: MESSAGES.DELETE_CARD, index }) }, "X" ),
+              button(
+                {
+                  onclick: () => dispatch({ type: MESSAGES.EDIT_QUIZ, index }),
+                },
+                "Bearbeiten"
+              ),
+
+              button(
+                {
+                  onclick: () => dispatch({ type: MESSAGES.DELETE_QUIZ, index }),
+                },
+                "X"
+              ),
             ]
           ),
           p({}, "Frage"),
           p({}, card.question),
           br({}),
-          button({ onclick: () => dispatch({ type: MESSAGES.TOGGLE_ANSWER, index }) }, card.showAnswer ? "Verbergen" : "Anzeigen"),
+          button(
+            {
+              onclick: () => dispatch({ type: MESSAGES.SHOW_HIDE_ANSWER, index }),
+            },
+            card.showAnswer ? "Verbergen" : "Anzeigen"
+          ),
           card.showAnswer ? p({}, card.answer) : null,
           card.showAnswer ? br({}) : null,
           div({}, [
             "Bewertung: ",
-            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 0 }) }, "Schlecht" ),
+            button(
+              {
+                onclick: () =>
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, rating: 0 }),
+              },
+              "Schlecht"
+            ),
 
-            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 1 }) }, "Gut"),
+            button(
+              {
+                onclick: () =>
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, rating: 1 }),
+              },
+              "Gut"
+            ),
 
-            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 }),},"Sehr Gut"),
-          ])
+            button(
+              {
+                onclick: () =>
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, rating: 2 }),
+              },
+              "Sehr Gut"
+            ),
+          ]),
         ]
       )
-    )
+    ),
   ]);
 }
 
+// Funktion zur Aktualisierung des Modells (Update)
 function update(message, model) {
   switch (message.type) {
-    case MESSAGES.QUESTION_CHANGE:
+    case MESSAGES.QUESTION_QUIZ:
       return { ...model, question: message.value };
-    case MESSAGES.ANSWER_CHANGE:
+    case MESSAGES.ANSWER_QUIZ:
       return { ...model, answer: message.value };
-    case MESSAGES.ADD_CARD:
+    case MESSAGES.ADD_QUIZ:
       return {
         ...model,
         cards: [
@@ -87,13 +133,13 @@ function update(message, model) {
         question: "",
         answer: "",
       };
-    case MESSAGES.TOGGLE_ANSWER:
+    case MESSAGES.SHOW_HIDE_ANSWER:
       const updatedCards = [...model.cards];
       updatedCards[message.index].showAnswer = !updatedCards[message.index].showAnswer;
       return { ...model, cards: updatedCards };
-    case MESSAGES.DELETE_CARD:
+    case MESSAGES.DELETE_QUIZ:
       return { ...model, cards: model.cards.filter((_, index) => index !== message.index) };
-    case MESSAGES.EDIT_CARD:
+    case MESSAGES.EDIT_QUIZ:
       const cardToEdit = model.cards[message.index];
       return {
         ...model,
@@ -101,7 +147,7 @@ function update(message, model) {
         answer: cardToEdit.answer,
         cards: model.cards.filter((_, index) => index !== message.index),
       };
-    case MESSAGES.RATE_CARD:
+    case MESSAGES.FEEDBACK_QUIZ:
       const ratedCards = [...model.cards];
       ratedCards[message.index].rating += message.rating;
       return { ...model, cards: ratedCards };
@@ -110,11 +156,14 @@ function update(message, model) {
   }
 }
 
+// Hauptfunktion der Anwendung (Initialisierung und Darstellung)
 function app(initModel, update, view, node) {
   let model = initModel;
   let currentView = view(dispatch, model);
   let rootNode = createElement(currentView);
   node.appendChild(rootNode);
+  
+  // Dispatcher-Funktion zur Aktualisierung des Modells und der Ansicht
   function dispatch(msg) {
     model = update(msg, model);
     const updatedView = view(dispatch, model);
@@ -124,11 +173,15 @@ function app(initModel, update, view, node) {
   }
 }
 
+// Anfangsmodell für die Anwendung
 const initModel = {
   question: "",
   answer: "",
   cards: [],
 };
 
+// Knoten im HTML-Dokument, in dem die Anwendung gerendert wird
 const rootNode = document.getElementById("app");
+
+// Start der Anwendung
 app(initModel, update, createView, rootNode);
