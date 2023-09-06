@@ -25,7 +25,7 @@ function createView(dispatch, model) {
         value: model.question,
         oninput: (event) =>
           dispatch({ type: MESSAGES.QUESTION_CHANGE, value: event.target.value }),
-        style: { marginRight: "10px" },
+        className: "border border-gray-300 rounded p-1 mr-2", 
       }),
       input({
         type: "text",
@@ -33,79 +33,37 @@ function createView(dispatch, model) {
         value: model.answer,
         oninput: (event) =>
           dispatch({ type: MESSAGES.ANSWER_CHANGE, value: event.target.value }),
-        style: { marginRight: "10px" },
+        className: "border border-gray-300 rounded p-1 mr-2",
       }),
-      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }) }, "Speichern"),
+      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }), className: btnStyle }, "Speichern"),
     ]),
     ...model.cards.map((card, index) =>
       div(
         {
           key: index,
-          style: {
-            backgroundColor: "lightblue",
-            width: "60%",
-            wordWrap: "break-word",
-            position: "relative",
-            margin: "10px",
-            padding: "10px",
-          },
+          className: "bg-teal-700 w-60 break-words relative m-10 p-10",
         },
         [
-          p(
-            {
-              style: {
-                position: "absolute",
-                top: "5px",
-                right: "5px",
-              },
-            },
+          p({ className: " absolute top-5 right-5"},
             [
-              button(
-                {
-                  onclick: () => dispatch({ type: MESSAGES.EDIT_CARD, index }),
-                },
-                "Bearbeiten"
-              ),
-              " ",
-              button(
-                {
-                  onclick: () => dispatch({ type: MESSAGES.DELETE_CARD, index }),
-                },
-                "X"
-              ),
+              button({ onclick: () => dispatch({ type: MESSAGES.EDIT_CARD, index }) }, "Bearbeiten"),
+              
+              button({ onclick: () => dispatch({ type: MESSAGES.DELETE_CARD, index }) }, "X" ),
             ]
           ),
           p({}, "Frage"),
           p({}, card.question),
           br({}),
-          button(
-            {
-              onclick: () => dispatch({ type: MESSAGES.TOGGLE_ANSWER, index }),
-            },
-            card.showAnswer ? "Antwort verbergen" : "Antwort anzeigen"
-          ),
+          button({ onclick: () => dispatch({ type: MESSAGES.TOGGLE_ANSWER, index }) }, card.showAnswer ? "Verbergen" : "Anzeigen"),
           card.showAnswer ? p({}, card.answer) : null,
           card.showAnswer ? br({}) : null,
           div({}, [
             "Bewertung: ",
-            button(
-              {
-                onclick: () =>
-                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 0 }),
-              },
-              "Schlecht"
-            ),
-            " ",
-            button(
-              {
-                onclick: () =>
-                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 1 }),
-              },
-              "Gut"
-            ),
-            " ",
-            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 }),
-          },"Sehr Gut"),
+            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 0 }) }, "Schlecht" ),
+
+            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 1 }) }, "Gut"),
+
+            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 }),},"Sehr Gut"),
           ])
         ]
       )
