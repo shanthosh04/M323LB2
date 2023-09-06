@@ -7,7 +7,7 @@ import createElement from "virtual-dom/create-element";
 const { div, button, p, h1, input, br } = hh(h);
 
 // Stildefinition für Schaltflächen
-const btnStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded";
+const ButtonStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded";
 
 // Nachrichtentypen für die Anwendung
 const MESSAGES = {
@@ -44,7 +44,7 @@ function createView(dispatch, model) {
       button(
         {
           onclick: () => dispatch({ type: MESSAGES.ADD_QUIZ }),
-          className: btnStyle,
+          className: ButtonStyle,
         },
         "Speichern"
       ),
@@ -86,6 +86,7 @@ function createView(dispatch, model) {
           card.showAnswer ? br({}) : null,
           div({}, [
             "Bewertung: ",
+            br({}),
             button(
               {
                 onclick: () =>
@@ -93,7 +94,6 @@ function createView(dispatch, model) {
               },
               "Schlecht"
             ),
-
             button(
               {
                 onclick: () =>
@@ -101,7 +101,6 @@ function createView(dispatch, model) {
               },
               "Gut"
             ),
-
             button(
               {
                 onclick: () =>
