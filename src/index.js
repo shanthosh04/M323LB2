@@ -127,7 +127,7 @@ function update(message, model) {
         ...model,
         cards: [
           ...model.cards,
-          { question: model.question, answer: model.answer, showAnswer: false, rating: 0 },
+          { question: model.question, answer: model.answer, showAnswer: false, },
         ],
         question: "",
         answer: "",
