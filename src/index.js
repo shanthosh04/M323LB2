@@ -35,14 +35,14 @@ function createView(dispatch, model) {
           dispatch({ type: MESSAGES.ANSWER_CHANGE, value: event.target.value }),
         style: { marginRight: "10px" },
       }),
-      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }) }, "✅"),
+      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }) }, "Speichern"),
     ]),
     ...model.cards.map((card, index) =>
       div(
         {
           key: index,
           style: {
-            backgroundColor: "lightyellow",
+            backgroundColor: "lightblue",
             width: "60%",
             wordWrap: "break-word",
             position: "relative",
@@ -64,14 +64,14 @@ function createView(dispatch, model) {
                 {
                   onclick: () => dispatch({ type: MESSAGES.EDIT_CARD, index }),
                 },
-                "✏️"
+                "Bearbeiten"
               ),
               " ",
               button(
                 {
                   onclick: () => dispatch({ type: MESSAGES.DELETE_CARD, index }),
                 },
-                "❌"
+                "X"
               ),
             ]
           ),
@@ -93,7 +93,7 @@ function createView(dispatch, model) {
                 onclick: () =>
                   dispatch({ type: MESSAGES.RATE_CARD, index, rating: 0 }),
               },
-              "🟥"
+              "Schlecht"
             ),
             " ",
             button(
@@ -101,16 +101,11 @@ function createView(dispatch, model) {
                 onclick: () =>
                   dispatch({ type: MESSAGES.RATE_CARD, index, rating: 1 }),
               },
-              "🟨"
+              "Gut"
             ),
             " ",
-            button(
-              {
-                onclick: () =>
-                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 }),
-              },
-              "🟩"
-            ),
+            button({ onclick: () => dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 }),
+          },"Sehr Gut"),
           ])
         ]
       )
