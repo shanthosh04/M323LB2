@@ -2,10 +2,8 @@ import hh from "hyperscript-helpers";
 import { h, diff, patch } from "virtual-dom";
 import createElement from "virtual-dom/create-element";
 
-// allows using html tags as functions in javascript
-const { div, button, p, h1 } = hh(h);
+const { div, button, p, h1, input, br } = hh(h);
 
-// A combination of Tailwind classes which represent a (more or less nice) button style
 const btnStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 
 const MESSAGES = {
@@ -15,7 +13,7 @@ const MESSAGES = {
   TOGGLE_ANSWER: "TOGGLE_ANSWER",
   DELETE_CARD: "DELETE_CARD",
   EDIT_CARD: "EDIT_CARD",
-  RATE_CARD: "RATE_CARD"
+  RATE_CARD: "RATE_CARD",
 };
 
 function createView(dispatch, model) {
@@ -25,19 +23,19 @@ function createView(dispatch, model) {
         type: "text",
         placeholder: "Frage eingeben",
         value: model.question,
-        oninput: event =>
+        oninput: (event) =>
           dispatch({ type: MESSAGES.QUESTION_CHANGE, value: event.target.value }),
-        style: { marginRight: "10px" }
+        style: { marginRight: "10px" },
       }),
       input({
         type: "text",
         placeholder: "Antwort eingeben",
         value: model.answer,
-        oninput: event =>
+        oninput: (event) =>
           dispatch({ type: MESSAGES.ANSWER_CHANGE, value: event.target.value }),
-        style: { marginRight: "10px" }
+        style: { marginRight: "10px" },
       }),
-      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }) }, "✅")
+      button({ onclick: () => dispatch({ type: MESSAGES.ADD_CARD }) }, "✅"),
     ]),
     ...model.cards.map((card, index) =>
       div(
@@ -49,8 +47,8 @@ function createView(dispatch, model) {
             wordWrap: "break-word",
             position: "relative",
             margin: "10px",
-            padding: "10px"
-          }
+            padding: "10px",
+          },
         },
         [
           p(
@@ -58,23 +56,23 @@ function createView(dispatch, model) {
               style: {
                 position: "absolute",
                 top: "5px",
-                right: "5px"
-              }
+                right: "5px",
+              },
             },
             [
               button(
                 {
-                  onclick: () => dispatch({ type: MESSAGES.EDIT_CARD, index })
+                  onclick: () => dispatch({ type: MESSAGES.EDIT_CARD, index }),
                 },
                 "✏️"
               ),
               " ",
               button(
                 {
-                  onclick: () => dispatch({ type: MESSAGES.DELETE_CARD, index })
+                  onclick: () => dispatch({ type: MESSAGES.DELETE_CARD, index }),
                 },
                 "❌"
-              )
+              ),
             ]
           ),
           p({}, "Frage"),
@@ -82,7 +80,7 @@ function createView(dispatch, model) {
           br({}),
           button(
             {
-              onclick: () => dispatch({ type: MESSAGES.TOGGLE_ANSWER, index })
+              onclick: () => dispatch({ type: MESSAGES.TOGGLE_ANSWER, index }),
             },
             card.showAnswer ? "Antwort verbergen" : "Antwort anzeigen"
           ),
@@ -93,7 +91,7 @@ function createView(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 0 })
+                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 0 }),
               },
               "🟥"
             ),
@@ -101,7 +99,7 @@ function createView(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 1 })
+                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 1 }),
               },
               "🟨"
             ),
@@ -109,10 +107,10 @@ function createView(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 })
+                  dispatch({ type: MESSAGES.RATE_CARD, index, rating: 2 }),
               },
               "🟩"
-            )
+            ),
           ])
         ]
       )
@@ -120,7 +118,7 @@ function createView(dispatch, model) {
   ]);
 }
 
-function updateModel(message, model) {
+function update(message, model) {
   switch (message.type) {
     case MESSAGES.QUESTION_CHANGE:
       return { ...model, question: message.value };
@@ -131,10 +129,10 @@ function updateModel(message, model) {
         ...model,
         cards: [
           ...model.cards,
-          { question: model.question, answer: model.answer, showAnswer: false, rating: 0 }
+          { question: model.question, answer: model.answer, showAnswer: false, rating: 0 },
         ],
         question: "",
-        answer: ""
+        answer: "",
       };
     case MESSAGES.TOGGLE_ANSWER:
       const updatedCards = [...model.cards];
@@ -148,7 +146,7 @@ function updateModel(message, model) {
         ...model,
         question: cardToEdit.question,
         answer: cardToEdit.answer,
-        cards: model.cards.filter((_, index) => index !== message.index)
+        cards: model.cards.filter((_, index) => index !== message.index),
       };
     case MESSAGES.RATE_CARD:
       const ratedCards = [...model.cards];
@@ -176,8 +174,8 @@ function app(initModel, update, view, node) {
 const initModel = {
   question: "",
   answer: "",
-  cards: []
+  cards: [],
 };
 
 const rootNode = document.getElementById("app");
-app(initModel, update, view, rootNode);
+app(initModel, update, createView, rootNode);
