@@ -147,9 +147,6 @@ function update(message, model) {
         cards: model.cards.filter((_, index) => index !== message.index),
       };
     case MESSAGES.FEEDBACK_QUIZ:
-      const ratedCards = [...model.cards];
-      ratedCards[message.index].rating += message.rating;
-      return { ...model, cards: ratedCards };
     default:
       return model;
   }
