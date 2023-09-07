@@ -180,4 +180,4 @@ const rootNode = document.getElementById("app");
 app(initModel, update, view, rootNode);
 
 
-module.exports(app);
+module.exports = (app);
