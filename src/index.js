@@ -106,7 +106,7 @@ function view(dispatch, model) {
                 onclick: () =>
                   dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
-              "Sehr Gut"
+              "Perfekt"
             ),
           ]),
         ]
