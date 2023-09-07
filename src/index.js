@@ -146,7 +146,6 @@ function update(message, model) {
         answer: cardToEdit.answer,
         cards: model.cards.filter((_, index) => index !== message.index),
       };
-    case MESSAGES.FEEDBACK_QUIZ:
     default:
       return model;
   }
