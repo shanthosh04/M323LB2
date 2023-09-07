@@ -21,6 +21,8 @@ const MESSAGES = {
 };
 
 // Funktion zur Erstellung der Benutzeroberfläche (View)
+// Dispatch funktion sendet Aktionen an andere teile der code
+// Model enthält aktuelle Daten
 function view(dispatch, model) {
   return div({}, [
     // Eingabefelder für Frage und Antwort
