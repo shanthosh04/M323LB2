@@ -29,7 +29,7 @@ function view(dispatch, model) {
     div({}, [
       input({
         type: "text",
-        placeholder: "Ihre Frage eingeben",
+        placeholder: "Give your Question",
         value: model.question,
         oninput: (event) =>
           dispatch({ type: MESSAGES.QUESTION_QUIZ, value: event.target.value }),
@@ -37,7 +37,7 @@ function view(dispatch, model) {
       }),
       input({
         type: "text",
-        placeholder: "Ihre Antwort eingeben",
+        placeholder: "Give your answer",
         value: model.answer,
         oninput: (event) =>
           dispatch({ type: MESSAGES.ANSWER_QUIZ, value: event.target.value }),
@@ -64,7 +64,7 @@ function view(dispatch, model) {
                 {
                   onclick: () => dispatch({ type: MESSAGES.EDIT_QUIZ, index }),
                 },
-                "Bearbeiten"
+                "Edit"
               ),
 
               button(
@@ -82,7 +82,7 @@ function view(dispatch, model) {
             {
               onclick: () => dispatch({ type: MESSAGES.SHOW_HIDE_ANSWER, index }),
             },
-            card.showAnswer ? "Verbergen" : "Anzeigen"
+            card.showAnswer ? "Hide" : "Show"
           ),
           card.showAnswer ? p({}, card.answer) : null,
           card.showAnswer ? br({}) : null,
@@ -94,21 +94,21 @@ function view(dispatch, model) {
                 onclick: () =>
                   dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
-              "Schlecht"
+              "Bad"
             ),
             button(
               {
                 onclick: () =>
                   dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
-              "Gut"
+              "Good"
             ),
             button(
               {
                 onclick: () =>
                   dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
               },
-              "Perfekt"
+              "Perfect"
             ),
           ]),
         ]
