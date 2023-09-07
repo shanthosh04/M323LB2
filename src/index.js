@@ -40,7 +40,7 @@ function view(dispatch, model) {
           onclick: () => dispatch({ type: MESSAGES.ADD_QUIZ }),
           className: ButtonStyle,
         },
-        "Speichern"
+        "Save"
       ),
     ]),
     model.cards.map((card, index) =>
