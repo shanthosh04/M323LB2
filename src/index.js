@@ -51,14 +51,13 @@ function view(dispatch, model) {
         "Speichern"
       ),
     ]),
-
-    // Karten für Fragen und Antworten
-    ...model.cards.map((card, index) =>
+ 
+    model.cards.map((card, index) =>
       div(
         { className: "bg-teal-700 w-60 break-words relative m-10 p-10" },
         [
           p(
-            { className: " absolute top-5 right-5" },
+            { className: "absolute top-5 right-5" },
             [
               button(
                 {
@@ -66,7 +65,7 @@ function view(dispatch, model) {
                 },
                 "Edit"
               ),
-
+  
               button(
                 {
                   onclick: () => dispatch({ type: MESSAGES.DELETE_QUIZ, index }),
@@ -92,28 +91,28 @@ function view(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index }),
               },
               "Bad"
             ),
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index }),
               },
               "Good"
             ),
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index }),
               },
               "Perfect"
             ),
           ]),
         ]
       )
-    ),
+  )
   ]);
 }
 
