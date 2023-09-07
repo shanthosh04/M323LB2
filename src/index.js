@@ -27,19 +27,19 @@ function view(dispatch, model) {
     div({}, [
       input({
         type: "text",
-        placeholder: "Frage eingeben",
+        placeholder: "Ihre Frage eingeben",
         value: model.question,
         oninput: (event) =>
           dispatch({ type: MESSAGES.QUESTION_QUIZ, value: event.target.value }),
-        className: "border border-gray-300 rounded p-1 mr-2",
+        className: "border border-blue-300 rounded p-1 mr-2",
       }),
       input({
         type: "text",
-        placeholder: "Antwort eingeben",
+        placeholder: "Ihre Antwort eingeben",
         value: model.answer,
         oninput: (event) =>
           dispatch({ type: MESSAGES.ANSWER_QUIZ, value: event.target.value }),
-        className: "border border-gray-300 rounded p-1 mr-2",
+        className: "border border-blue-300 rounded p-1 mr-2",
       }),
       button(
         {
