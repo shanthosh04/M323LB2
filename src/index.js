@@ -1,6 +1,6 @@
-const hh = require ("hyperscript-helpers");
-const { h, diff, patch } = require ("virtual-dom");
-const createElement = require ("virtual-dom/create-element");
+const hh = require("hyperscript-helpers");
+const { h, diff, patch } = require("virtual-dom");
+const createElement = require("virtual-dom/create-element");
 
 const { div, button, p, input, br } = hh(h);
 
@@ -56,7 +56,7 @@ function view(dispatch, model) {
                 },
                 "Edit"
               ),
-  
+
               button(
                 {
                   onclick: () => dispatch({ type: MESSAGES.DELETE_QUIZ, index }),
@@ -103,10 +103,9 @@ function view(dispatch, model) {
           ]),
         ]
       )
-    )
+    ),
   ]);
 }
-
 
 function update(message, model) {
   switch (message.type) {
@@ -119,17 +118,21 @@ function update(message, model) {
         ...model,
         cards: [
           ...model.cards,
-          { question: model.question, answer: model.answer, showAnswer: false, },
+          { question: model.question, answer: model.answer, showAnswer: false },
         ],
         question: "",
         answer: "",
       };
     case MESSAGES.SHOW_HIDE_ANSWER:
       const updatedCards = [...model.cards];
-      updatedCards[message.index].showAnswer = !updatedCards[message.index].showAnswer;
+      updatedCards[message.index].showAnswer = !updatedCards[message.index]
+        .showAnswer;
       return { ...model, cards: updatedCards };
     case MESSAGES.DELETE_QUIZ:
-      return { ...model, cards: model.cards.filter((_, index) => index !== message.index) };
+      return {
+        ...model,
+        cards: model.cards.filter((_, index) => index !== message.index),
+      };
     case MESSAGES.EDIT_QUIZ:
       const cardToEdit = model.cards[message.index];
       return {
@@ -142,7 +145,6 @@ function update(message, model) {
       return model;
   }
 }
-
 
 function app(initModel, update, view, node) {
   let model = initModel;
@@ -158,7 +160,6 @@ function app(initModel, update, view, node) {
   }
 }
 
-
 const initModel = {
   question: "",
   answer: "",
@@ -170,4 +171,4 @@ const rootNode = document.getElementById("app");
 app(initModel, update, view, rootNode);
 
 
-module.exports = (app);
+module.exports = { view, update, app, initModel,};
