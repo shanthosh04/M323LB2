@@ -85,7 +85,7 @@ function view(dispatch, model) {
           card.showAnswer ? p({}, card.answer) : null,
           card.showAnswer ? br({}) : null,
           div({}, [
-            "Bewertung: ",
+            "Evaluation: ",
             br({}),
             button(
               {
