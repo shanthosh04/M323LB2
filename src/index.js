@@ -51,10 +51,9 @@ function view(dispatch, model) {
         "Speichern"
       ),
     ]),
- 
     model.cards.map((card, index) =>
       div(
-        { className: "bg-teal-700 w-60 break-words relative m-10 p-10" },
+        { className: "bg-teal-700 w-60 break-words relative m-10 p-10 " },
         [
           p(
             { className: "absolute top-5 right-5" },
@@ -112,7 +111,7 @@ function view(dispatch, model) {
           ]),
         ]
       )
-  )
+    )
   ]);
 }
 
