@@ -82,21 +82,21 @@ function view(dispatch, model) {
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, feedback: "Bad" }),
               },
               "Bad"
             ),
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, feedback: "Good" }),
               },
               "Good"
             ),
             button(
               {
                 onclick: () =>
-                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index }),
+                  dispatch({ type: MESSAGES.FEEDBACK_QUIZ, index, feedback: "Perfect" }), 
               },
               "Perfect"
             ),
@@ -141,6 +141,17 @@ function update(message, model) {
         answer: cardToEdit.answer,
         cards: model.cards.filter((_, index) => index !== message.index),
       };
+    case MESSAGES.FEEDBACK_QUIZ:
+      const feedback = message.feedback;
+      const index = message.index;
+      if (feedback === "Bad") {
+        updatedCards[index].ranking = (updatedCards[index].ranking || 0) - 0;
+      } else if (feedback === "Good") {
+        updatedCards[index].ranking = (updatedCards[index].ranking || 0) + 1;
+      } else if (feedback === "Perfect") {
+        updatedCards[index].ranking = (updatedCards[index].ranking || 0) + 2;
+      }
+      return { ...model, cards: updatedCards };
     default:
       return model;
   }
@@ -170,5 +181,4 @@ const rootNode = document.getElementById("app");
 
 app(initModel, update, view, rootNode);
 
-
-module.exports = { view, update, app, initModel,};
+module.exports = { view, update, app, initModel };
