@@ -158,8 +158,6 @@ function app(initModel, update, view, node) {
   let currentView = view(dispatch, model);
   let rootNode = createElement(currentView);
   node.appendChild(rootNode);
-  
-  // Dispatcher-Funktion zur Aktualisierung des Modells und der Ansicht
   function dispatch(msg) {
     model = update(msg, model);
     const updatedView = view(dispatch, model);
@@ -177,7 +175,7 @@ const initModel = {
 };
 
 // Knoten im HTML-Dokument, in dem die Anwendung gerendert wird
-const node = document.getElementById("app");
+const rootNode = document.getElementById("app");
 
 // Start der Anwendung
-app(initModel, update, view, node);
+app(initModel, update, view, rootNode);
