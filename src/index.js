@@ -1,7 +1,7 @@
 // Importieren der benötigten Module
-import hh from "hyperscript-helpers";
-import { h, diff, patch } from "virtual-dom";
-import createElement from "virtual-dom/create-element";
+const hh = require ("hyperscript-helpers");
+const { h, diff, patch } = require ("virtual-dom");
+const createElement = require ("virtual-dom/create-element");
 
 // Destructuring von Hyperscript-Helpers
 const { div, button, p, input, br } = hh(h);
@@ -178,3 +178,6 @@ const rootNode = document.getElementById("app");
 
 // Start der Anwendung
 app(initModel, update, view, rootNode);
+
+
+module.exports(app);
