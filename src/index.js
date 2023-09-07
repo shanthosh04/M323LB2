@@ -4,7 +4,7 @@ import { h, diff, patch } from "virtual-dom";
 import createElement from "virtual-dom/create-element";
 
 // Destructuring von Hyperscript-Helpers
-const { div, button, p, h1, input, br } = hh(h);
+const { div, button, p, input, br } = hh(h);
 
 // Stildefinition für Schaltflächen
 const ButtonStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded";
@@ -21,7 +21,7 @@ const MESSAGES = {
 };
 
 // Funktion zur Erstellung der Benutzeroberfläche (View)
-function createView(dispatch, model) {
+function view(dispatch, model) {
   return div({}, [
     // Eingabefelder für Frage und Antwort
     div({}, [
@@ -177,7 +177,7 @@ const initModel = {
 };
 
 // Knoten im HTML-Dokument, in dem die Anwendung gerendert wird
-const rootNode = document.getElementById("app");
+const node = document.getElementById("app");
 
 // Start der Anwendung
-app(initModel, update, createView, rootNode);
+app(initModel, update, view, node);
