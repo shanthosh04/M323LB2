@@ -1,15 +1,11 @@
-// Importieren der benötigten Module
 const hh = require ("hyperscript-helpers");
 const { h, diff, patch } = require ("virtual-dom");
 const createElement = require ("virtual-dom/create-element");
 
-// Destructuring von Hyperscript-Helpers
 const { div, button, p, input, br } = hh(h);
 
-// Stildefinition für Schaltflächen
 const ButtonStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded";
 
-// Nachrichtentypen für die Anwendung
 const MESSAGES = {
   QUESTION_QUIZ: "QUESTION_QUIZ",
   ANSWER_QUIZ: "ANSWER_QUIZ",
@@ -20,12 +16,8 @@ const MESSAGES = {
   FEEDBACK_QUIZ: "FEEDBACK_QUIZ",
 };
 
-// Funktion zur Erstellung der Benutzeroberfläche (View)
-// Dispatch funktion sendet Aktionen an andere teile der code
-// Model enthält aktuelle Daten
 function view(dispatch, model) {
   return div({}, [
-    // Eingabefelder für Frage und Antwort
     div({}, [
       input({
         type: "text",
@@ -115,7 +107,7 @@ function view(dispatch, model) {
   ]);
 }
 
-// Funktion zur Aktualisierung des Modells (Update)
+
 function update(message, model) {
   switch (message.type) {
     case MESSAGES.QUESTION_QUIZ:
@@ -151,7 +143,7 @@ function update(message, model) {
   }
 }
 
-// Hauptfunktion der Anwendung (Initialisierung und Darstellung)
+
 function app(initModel, update, view, node) {
   let model = initModel;
   let currentView = view(dispatch, model);
@@ -166,17 +158,15 @@ function app(initModel, update, view, node) {
   }
 }
 
-// Anfangsmodell für die Anwendung
+
 const initModel = {
   question: "",
   answer: "",
   cards: [],
 };
 
-// Knoten im HTML-Dokument, in dem die Anwendung gerendert wird
 const rootNode = document.getElementById("app");
 
-// Start der Anwendung
 app(initModel, update, view, rootNode);
 
 
