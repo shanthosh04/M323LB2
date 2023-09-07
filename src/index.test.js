@@ -1,4 +1,4 @@
-const { view, update, app, initModel } = require("./index.js");
+const { view, update, app, initModel, rootNode } = require("./index.js");
 
 describe('Quiz Cards', function () {
   it('view function without errors', function () {
